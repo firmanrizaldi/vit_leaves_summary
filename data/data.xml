@@ -1,0 +1,22 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="overtime_type_default" model="hr.overtime.hour">
+            <field name="name">Lembur Biasa</field>
+            <field name="hour_ids" eval="[(0, 0, {'from_hour': '1', 'to_hour': '24', 'calculation': 1})]"/>
+        </record>
+
+         <record id="overtime_type_default_1" model="hr.overtime.hour">
+            <field name="name">Lembur Off In</field>
+            <field name="hour_ids" eval="[(0, 0, {'from_hour': '1', 'to_hour': '24', 'calculation': 1})]"/>
+        </record>
+
+         <record id="overtime_type_default_2" model="hr.overtime.hour">
+            <field name="name">Lembur Istimewa</field>
+            <field name="hour_ids" eval="[(0, 0, {'from_hour': '1', 'to_hour': '24', 'calculation': 1})]"/>
+        </record>
+
+    </data>
+</odoo>
+ -->

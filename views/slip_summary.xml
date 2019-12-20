@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+
+<!--         <record id="view_hr_overtime_filter" model="ir.ui.view">
+            <field name="name">hr.overtime.filter</field>
+            <field name="model">hr.overtime</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Overtime">
+                        <field name="department_id"/>
+                        <field name="type_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                </search>
+            </field>
+        </record>
+-->
+<!--         <record id="hr_rules_pph21" model="hr.salary.rule">
+            <field name="name">PPH21 true</field>
+            <field name="code">PPH21</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = payleaves.pph21 > 0</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">115</field>
+            <field name="amount_python_compute">result = -payleaves.pph21</field>
+        </record> -->
+        <record model="ir.ui.view" id="view_leaves_summary_detail_tree">
+            <field name="name">leaves.summary.detail.tree</field>
+            <field name="model">leaves.summary.detail</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="leaves Summary Detail"  editable="bottom">
+                    <field name="name"/>
+                    <field name="alokasi"/>
+                    <field name="sudah_approved"/>
+                    <field name="sisa"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_leaves_summary_form">
+            <field name="name">leaves Summary</field>
+            <field name="model">leaves.summary</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="leaves Summary" version="7.0">  
+                    <header>
+                        
+                        <button string="Reset to Draft" 
+                                type="object" 
+                                name="action_draft" 
+                                states="confirm" />                        
+
+                        <button string="Confirm" 
+                                type="object" 
+                                name="action_confirm" 
+                                states="draft"/>
+
+                        <!-- <button string="Confirm" 
+                                type="object"
+                                name="action_confirm_manager"
+                                states="confirm"/>                          -->
+
+                        <button string="Validate" 
+                                type="object"
+                                name="action_validate"
+                                states="confirm"/>
+
+                        <!-- <button string="Refuse" 
+                                type="object"
+                                name="action_refuse"
+                                states="confirm,confirm_manager"/>                        
+
+                        <button string="Cancel" 
+                                type="object"
+                                name="action_cancel"
+                                states="validate"/> -->
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"draft":"blue","confirm":"blue","validate":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="department_id"/>
+                                <field name="holiday_status_id"/>
+                            </group>
+                            <group>
+                                <button name="action_nominal" string="Compute" type="object" class="oe_highlight"/>
+                                <!--  <button name="action_nominal" string="Compute" type="object" class="oe_highlight" attrs="{'invisible':[('is_compute','=',True)]}"/> -->
+                                <button name="export" string="Generate" type="object" class="oe_highlight"/>
+                                <div>
+                                    <field name="is_compute" invisible="1"/>
+                                    <field name="name_txt_file" invisible="1"/>
+                                    <field name="export_data_txt" invisible="1"/>
+                                    <h2>Export Complete</h2>
+                                    <p>Here is the exported file: <field name="export_data" readonly="1" filename="name_txt_file"/></p>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Summary">
+                                <field name="summary_detail_ids"/>
+                            </page>
+                        </notebook>
+                        <!-- <group>
+                            <field name="notes" nolabel="1" colspan="4"/>
+                        </group>   -->                     
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_leaves_summary_tree">
+            <field name="name">leaves.summary</field>
+            <field name="model">leaves.summary</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state in ('refuse');blue:state in (' draft');black:state in ('confirm','validate')" string="Overtimes">
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="open_leaves_summary">
+            <field name="name">leaves Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">leaves.summary</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add
+                </p>
+                <p>klik tombol create untuk menambah data lembur baru</p>
+            </field>
+        </record> 
+        
+        <!-- top menu overtime -->
+            
+        <menuitem id="menu_hr_leaves_summary"
+            name="leaves Summary"
+            parent="hr_holidays.menu_hr_holidays_root"/>
+
+        <menuitem id="sub_menu_hr_leaves_summary"
+            name="leaves Summary"
+            parent="menu_hr_leaves_summary"
+            action="open_leaves_summary"
+            sequence="1"/>
+
+
+    </data>
+
+</odoo>
